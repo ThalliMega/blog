@@ -1,0 +1,14 @@
+header {
+    height: 30vmin;
+    margin: 2vmin 3vmin;
+}
+
+header div {
+    height: 30vmin;
+    gap: 5vmin;
+}
+
+#avatar {
+    height: 30vmin;
+    width: 30vmin;
+}

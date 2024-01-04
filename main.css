@@ -1,0 +1,32 @@
+:root {
+    color-scheme: dark light;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header div {
+    display: flex;
+    align-items: center;
+}
+
+header div img {
+    cursor: pointer;
+}
+
+#avatar {
+    animation: 7s linear 0s infinite normal both paused rot;
+}
+
+@keyframes rot {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(1turn);
+    }
+}

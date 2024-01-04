@@ -1,0 +1,16 @@
+@media screen and (min-width:1000px) {
+    header {
+        height: 10vmin;
+        margin: 5vmin 3vmin;
+    }
+
+    header div {
+        height: 10vmin;
+        gap: 3vmin;
+    }
+
+    #avatar {
+        height: 10vmin;
+        width: 10vmin;
+    }
+}
