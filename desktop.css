@@ -4,6 +4,10 @@
         margin: 5vmin 3vmin;
     }
 
+    main {
+        margin: 0 3vmin;
+    }
+
     header div {
         height: 10vmin;
         gap: 3vmin;

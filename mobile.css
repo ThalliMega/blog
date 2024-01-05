@@ -3,6 +3,10 @@ header {
     margin: 2vmin 3vmin;
 }
 
+main {
+    margin: 0 3vmin;
+}
+
 header div {
     height: 30vmin;
     gap: 5vmin;

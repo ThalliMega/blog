@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta content="origin" name="referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Thallium Megalovania">
+    <meta name="description" content="关于WSL使用GPG进行SSH认证">
+    <meta name="keywords" content="ThalliMega,Thallium Megalovania,blog,gpg,ssh">
+    <link rel="icon" href="avatar.svg" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="mobile.css" />
+    <link rel="stylesheet" href="desktop.css" />
+    <title>WSL使用GPG进行SSH认证</title>
+</head>
+
+<body>
+    <header>
+        <div>
+            <img src="avatar.svg" alt="avatar" id="avatar" style="cursor:default" />
+            <h1>ThalliMega's Blog</h1>
+        </div>
+        <a href="index.html">Home</a>
+    </header>
+    <main>
+        <h1>WSL使用GPG进行SSH认证</h1>
+        <h2>配置</h2>
+        <cite>~/.gnupg/gpg-agent.conf</cite><br>
+        <code>enable-ssh-support</code><br>
+        <cite>.rc</cite><br>
+        <pre><code>
+    eval (ssh-agent -c)
+    set SSH_AUTH_SOCK $(gpgconf --list-dirs agent-ssh-socket)
+    gpgconf --launch gpg-agent
+    gpg-connect-agent updatestartuptty /bye >/dev/null
+    set GPG_TTY $(tty)</code></pre><br>
+        <cite>git config --global --get user.signingkey</cite><br>
+        <code>1145141919810!</code>
+        <h2>验证</h2>
+        <p><code>ssh-add -L</code>正常。</p>
+        <h2>问题</h2>
+        <p><code>echo "test" | gpg --clearsign</code>报错。</p>
+        <blockquote>
+            <pre>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+test
+gpg: signing failed: Inappropriate ioctl for device
+gpg: [stdin]: clear-sign failed: Inappropriate ioctl for device
+</pre>
+        </blockquote>
+        <h2>解决方法</h2>
+        <cite>~/.gnupg/gpg-agent.conf</cite><br>
+        <code>allow-loopback-pinentry</code><br>
+        <cite>~/.gnupg/gpg.conf</cite><br>
+        <code>pinentry-mode loopback</code><br>
+    </main>
+</body>
+
+</html>
