@@ -51,10 +51,8 @@ gpg: [stdin]: clear-sign failed: Inappropriate ioctl for device
 </pre>
         </blockquote>
         <h2>解决方法</h2>
-        <cite>~/.gnupg/gpg-agent.conf</cite><br>
-        <code>allow-loopback-pinentry</code><br>
-        <cite>~/.gnupg/gpg.conf</cite><br>
-        <code>pinentry-mode loopback</code><br>
+        <cite>~/.config/fish/config.fish</cite><br>
+        <code>set -gx GPG_TTY (tty)</code><br>
     </main>
 </body>
 
