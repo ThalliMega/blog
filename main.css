@@ -21,6 +21,14 @@ header div img {
     animation: 7s linear 0s infinite normal both paused rot;
 }
 
+footer {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 2vmin;
+    width: 100%;
+}
+
 @keyframes rot {
     from {
         transform: rotate(0);
