@@ -21,12 +21,20 @@ header div img {
     animation: 7s linear 0s infinite normal both paused rot;
 }
 
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
 footer {
     display: flex;
     justify-content: center;
-    position: fixed;
-    bottom: 2vmin;
-    width: 100%;
+    align-items: end;
+    flex-grow: 1;
+    margin-bottom: 2vh;
+    margin-top: 4vh;
 }
 
 @keyframes rot {
