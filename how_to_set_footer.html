@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta content="origin" name="referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Thallium Megalovania">
+    <meta name="description" content="使用flex實現頁底footer">
+    <meta name="keywords" content="ThalliMega,Thallium Megalovania,blog,css,flex">
+    <link rel="icon" href="avatar.svg" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="mobile.css" media="(max-width:999px)" />
+    <link rel="stylesheet" href="desktop.css" media="(min-width:1000px)" />
+    <title>使用flex實現頁底footer</title>
+</head>
+
+<body>
+    <header>
+        <div>
+            <img src="avatar.svg" alt="avatar" id="avatar" style="cursor:default" />
+            <h1>ThalliMega's Blog</h1>
+        </div>
+        <a href="index.html">Home</a>
+    </header>
+    <main>
+        <h1>使用flex實現頁底footer</h1>
+        <h2>需求</h2>
+        <p>如果頁面高度不足1屏，footer放至頁底；否則footer按正常文檔流放置。</p>
+        <h2>實現</h2>
+        <pre><code>
+    body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+    }
+    
+    footer {
+        display: flex;
+        justify-content: center;
+        align-items: end;
+        flex-grow: 1;
+        margin-bottom: 2vh;
+        margin-top: 4vh;
+    }
+        </code></pre>
+    </main>
+    <footer><a href="https://icp.gov.moe/?keyword=20240124" target="_blank">萌ICP备20240124号</a></footer>
+</body>
+
+</html>
