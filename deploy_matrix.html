@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta content="origin" name="referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Thallium Megalovania">
+    <meta name="description" content="集群部署matrix">
+    <meta name="keywords" content="ThalliMega,Thallium Megalovania,blog,matrix,conduit,k8s,cloudflare">
+    <link rel="icon" href="avatar.svg" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="mobile.css" media="(max-width:999px)" />
+    <link rel="stylesheet" href="desktop.css" media="(min-width:1000px)" />
+    <title>集群部署matrix</title>
+</head>
+
+<body>
+    <header>
+        <div>
+            <img src="avatar.svg" alt="avatar" id="avatar" style="cursor:default" />
+            <h1>ThalliMega's Blog</h1>
+        </div>
+        <a href="index.html">Home</a>
+    </header>
+    <main>
+        <h1>集群部署matrix</h1>
+        <h2>k8s</h2>
+        <h3>PersistentVolumeClaim</h3>
+        <pre><code>apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: matrix-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 70Gi
+  storageClassName: some-random-storage-class
+</code></pre>
+        <h3>Deployment</h3>
+        <pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matrix-conduit
+  labels:
+    type: matrix
+    app: conduit
+spec:
+  revisionHistoryLimit: 0
+  replicas: 1
+  selector:
+    matchLabels:
+      type: matrix
+      app: conduit
+  template:
+    metadata:
+      labels:
+        type: matrix
+        app: conduit
+    spec:
+      containers:
+      - name: matrix-conduit
+        image: matrixconduit/matrix-conduit:latest
+        env:
+        - name: CONDUIT_SERVER_NAME
+          value: some.random.domain.name
+        - name: CONDUIT_DATABASE_BACKEND
+          value: rocksdb
+        - name: CONDUIT_ALLOW_REGISTRATION
+          value: 'true'
+        - name: CONDUIT_ALLOW_FEDERATION
+          value: 'true'
+        - name: CONDUIT_MAX_REQUEST_SIZE
+          value: '20000000'
+        - name: CONDUIT_TRUSTED_SERVERS
+          value: '["matrix.org"]'
+        ports:
+        - containerPort: 6167
+        volumeMounts:
+        - name: nfs
+          mountPath: /var/lib/matrix-conduit/
+      volumes:
+      - name: nfs
+        persistentVolumeClaim:
+          claimName: matrix-pvc
+</code></pre>
+        <h3>IPAddressPool</h3>
+        <p>注：集群需已安裝metallb</p>
+        <pre><code>apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: intern-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 192.168.10.0/24
+  - 192.168.9.1-192.168.9.5
+  - fc00:f853:0ccd:e799::/124
+</code></pre>
+        <h3>L2Advertisement</h3>
+        <pre><code>apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: public
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - intern-pool
+</code></pre>
+        <h3>Service</h3>
+        <pre><code>apiVersion: v1
+kind: Service
+metadata:
+  name: matrix-service
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: 192.168.10.114 # random address in intern-pool
+spec:
+  type: LoadBalancer
+  selector:
+    type: matrix
+  ports:
+    - protocol: TCP
+      port: 6167 # 8448
+      targetPort: 6167
+</code></pre>
+        <h2>證書</h2>
+        <p>服務器80沒開所以只能dns</p>
+        <code>sudo certbot --manual --preferred-challenges dns certonly</code>
+        <h2>反代traefik</h2>
+        <h3>static config</h3>
+        <pre><code>global:
+  checkNewVersion: true
+  sendAnonymousUsage: true
+entryPoints:
+  matrix:
+    address: :8448
+
+providers:
+  file:
+    directory: ./traefik-config
+</code></pre>
+        <h3>dynamic config</h3>
+        <p>放上面定義的<code>providers.file.directory</code>裏面</p>
+        <p>cert的相對路徑相對于可執行文件</p>
+        <pre><code>tcp:
+  routers:
+    main:
+      entryPoints:
+      - matrix
+      service: "matrix"
+      rule: 'HostSNI(`some.random.domain.name`)'
+      tls: {}
+  services:
+    matrix:
+      loadBalancer:
+        servers:
+        - address: "192.168.10.114:6167"
+tls:
+  certificates:
+    - certFile: fullchain.pem
+      keyFile: privkey.pem
+</code></pre>
+        <h2>cloudflare</h2>
+        <p>由於動不了域名☞的服務器所以只能對cf動點手脚</p>
+        <p>先好心地幫忙讓域名A/AAAA記錄走proxy</p>
+        <p>然後加workers</p>
+        <code>index.ts</code><br />
+        <pre><code>export interface Env {
+	m_server: string,
+	m_client: string
+}
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		if (request.url.endsWith('server')) {
+			return Response.json({
+				'm.server': env.m_server
+			})
+		} else if (request.url.endsWith('client')) {
+			return Response.json({
+				"m.homeserver": {
+					"base_url": env.m_client
+				}
+			})
+		} else {
+			return new Response(null, {
+				status: 400,
+				statusText: 'Bad Request'
+			})
+		}
+	},
+};
+</code></pre>
+        <code>wrangler.toml</code><br />
+        <pre><code>[vars]
+m_server = "some.random.domain.name:8448"
+m_client = "https://some.random.domain.name:8448"
+</code></pre>
+        <p>然後把some.random.domain/.well-known/matrix/*挂上Workers Routes</p>
+        <h2>測試</h2>
+        <code>https://some.random.domain.name:8448/</code><br />
+        <code>Hello from Conduit!</code><br /><br />
+        <code>https://some.random.domain/.well-known/matrix/server</code><br />
+        <code>{"m.server":"some.random.domain.name:8448"}</code><br /><br />
+        <code>https://some.random.domain/.well-known/matrix/client</code><br />
+        <code>{"m.homeserver":{"base_url":"https://some.random.domain.name:8448"}}</code><br /><br />
+        <h1>問題與解決方法</h1>
+        <ul>
+            <li>
+                <h2>Element找不到homeserver some.random.domain</h2>
+                <p>設置cf的Transform Rules</p>
+                <p>If URI Full equals https://some.random.domain/.well-known/matrix/client, then set static
+                    Access-Control-Allow-Origin to *</p>
+            </li>
+        </ul>
+    </main>
+    <footer><a href="https://icp.gov.moe/?keyword=20240124" target="_blank">萌ICP备20240124号</a></footer>
+</body>
+
+</html>
