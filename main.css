@@ -5,16 +5,20 @@
 header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
 }
 
 header div {
     display: flex;
     align-items: center;
+    flex-grow: 1;
 }
 
 header div img {
     cursor: pointer;
+}
+
+header a {
+    margin-left: 2vw;
 }
 
 #avatar {
