@@ -25,20 +25,21 @@
     <main>
         <h1>WSL使用GPG进行SSH认证</h1>
         <h2>配置</h2>
-        <cite>~/.gnupg/gpg-agent.conf</cite><br>
-        <code>enable-ssh-support</code><br>
-        <cite>.rc</cite><br>
-        <pre><code>
-    eval (ssh-agent -c)
-    set SSH_AUTH_SOCK $(gpgconf --list-dirs agent-ssh-socket)
-    gpgconf --launch gpg-agent
-    gpg-connect-agent updatestartuptty /bye >/dev/null
-    set GPG_TTY $(tty)</code></pre><br>
-        <cite>git config --global --get user.signingkey</cite><br>
-        <code>1145141919810!</code>
+        <h3>~/.gnupg/gpg-agent.conf</h3>
+        <code>enable-ssh-support</code>
+        <h3>~/.config/fish/config.fish</h3>
+        <code>
+    set -gx GPG_TTY $(tty)<br>
+    gpg-connect-agent updatestartuptty /bye > /dev/null<br>
+    set -gx SSH_AUTH_SOCK $(gpgconf --list-dirs agent-ssh-socket)
+</code>
+        <!-- <cite>git config --global --get user.signingkey</cite><br>
+        <code>1145141919810!</code> -->
+        <h3>gpg-connect-agent</h3>
+        <code>keyattr &lt;keygrip&gt; Use-for-ssh: -1</code>
         <h2>验证</h2>
         <p><code>ssh-add -L</code>正常。</p>
-        <h2>问题</h2>
+        <!--<h2>问题</h2>
         <p><code>echo "test" | gpg --clearsign</code>报错。</p>
         <blockquote>
             <pre>
@@ -52,7 +53,7 @@ gpg: [stdin]: clear-sign failed: Inappropriate ioctl for device
         </blockquote>
         <h2>解决方法</h2>
         <cite>~/.config/fish/config.fish</cite><br>
-        <code>set -gx GPG_TTY (tty)</code><br>
+        <code>set -gx GPG_TTY (tty)</code><br>-->
     </main>
     <footer><a href="https://icp.gov.moe/?keyword=20240124" target="_blank">萌ICP备20240124号</a></footer>
 </body>
