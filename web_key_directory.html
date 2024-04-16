@@ -32,6 +32,8 @@
         &lt;/IfModule&gt;</code>
         <h2>$DOMAIN/.well-known/openpgpkey/hu/$(gpg --with-wkd-hash -k &lt;keyid&gt;)</h2>
         <code>$(gpg --export &lt;keyid&gt;)</code>
+        <h1>WKS</h1>
+        <code>gpg --list-options show-only-fpr-mbox -k $PATTERN | gpg-wks-client -v --install-key</code>
     </main>
     <footer><a href="https://icp.gov.moe/?keyword=20240124" target="_blank">萌ICP备20240124号</a></footer>
 </body>
