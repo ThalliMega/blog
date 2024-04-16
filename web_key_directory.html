@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta content="origin" name="referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Thallium Megalovania">
+    <meta name="description" content="配置Web Key Directory">
+    <meta name="keywords" content="ThalliMega,Thallium Megalovania,blog,Web Key Directory,WKD">
+    <link rel="icon" href="avatar.svg" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="mobile.css" media="(max-width:999px)" />
+    <link rel="stylesheet" href="desktop.css" media="(min-width:1000px)" />
+    <title>配置Web Key Directory</title>
+</head>
+
+<body>
+    <header>
+        <div>
+            <img src="avatar.svg" alt="avatar" id="avatar" style="cursor:default" />
+            <h1>ThalliMega's Blog</h1>
+        </div>
+        <a href="index.html">Home</a>
+    </header>
+    <main>
+        <h1>配置WKD</h1>
+        <h2>$DOMAIN/.well-known/openpgpkey/policy</h2>
+        <h2>$DOMAIN/.well-known/openpgpkey/hu/.htaccess</h2>
+        <code>&lt;IfModule mod_mime.c&gt;<br>
+            &emsp;ForceType application/octet-stream<br>
+            &emsp;Header always set Access-Control-Allow-Origin "*"<br>
+        &lt;/IfModule&gt;</code>
+        <h2>$DOMAIN/.well-known/openpgpkey/hu/$(gpg --with-wkd-hash -k &lt;keyid&gt;)</h2>
+        <code>$(gpg --export &lt;keyid&gt;)</code>
+    </main>
+    <footer><a href="https://icp.gov.moe/?keyword=20240124" target="_blank">萌ICP备20240124号</a></footer>
+</body>
+
+</html>
