@@ -51,11 +51,12 @@ footer {
     }
 }
 
-.down {
+a.down {
     color: red;
     text-decoration-style: wavy;
 }
 
-.shit-title {
-    rotate: 180deg;
+a.shit-title {
+    color: green;
+    text-decoration-style: dashed;
 }
