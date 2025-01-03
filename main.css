@@ -50,3 +50,12 @@ footer {
         transform: rotate(1turn);
     }
 }
+
+.down {
+    color: red;
+    text-decoration-style: wavy;
+}
+
+.shit-title {
+    rotate: 180deg;
+}
