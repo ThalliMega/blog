@@ -27,16 +27,29 @@
     </header>
     <main>
         <h1>配置WKD</h1>
-        <h2>$DOMAIN/.well-known/openpgpkey/policy</h2>
-        <h2>$DOMAIN/.well-known/openpgpkey/hu/.htaccess</h2>
-        <code>&lt;IfModule mod_mime.c&gt;<br>
-            &emsp;ForceType application/octet-stream<br>
-            &emsp;Header always set Access-Control-Allow-Origin "*"<br>
-        &lt;/IfModule&gt;</code>
-        <h2>$DOMAIN/.well-known/openpgpkey/hu/$(gpg --with-wkd-hash -k &lt;keyid&gt;)</h2>
+        <h2>direct mode</h2>
+        <strong>DON'T MAKE openpgpkey.$DOMAIN A/AAAA/CNAME DNS RECORDS</strong>
+        <strong>ASK USER TO DISABLE FAKE IP IF ONLY USING DIRECT MODE</strong><br>
+        <strong>IF IT'S HARD THEN USE ADVANCED MODE</strong>
+        <h3>$DOMAIN/.well-known/openpgpkey/policy</h3>
+        <h3>$DOMAIN/.well-known/openpgpkey/hu/<a href="#wkd%20hash">wkd hash</a></h3>
         <code>$(gpg --export &lt;keyid&gt;)</code>
+
+        <h2>advanced mode</h2>
+        <h3>openpgpkey.$DOMAIN/.well-known/openpgpkey/$DOMAIN/policy</h3>
+        <h3>openpgpkey.$DOMAIN/.well-known/openpgpkey/$DOMAIN/hu/<a href="#wkd%20hash">wkd hash</a></h3>
+
         <h1>WKS</h1>
         <code>gpg --list-options show-only-fpr-mbox -k $PATTERN | gpg-wks-client -v --install-key</code>
+
+        <h1>WKC</h1>
+        <code>gpg --locate&lbrace;-external&rbrace;-key $PATTERN</code>
+
+        <h1>wkd hash</h1>
+        only hash is needed<br>
+        <code>gpg-wks-client --print-wkd-hash $PATTERN</code><br>
+        <code>gpg-wks-client --print-wkd-url $PATTERN</code><br>
+        <code>gpg --with-wkd-hash -k $PATTERN</code>
     </main>
     <footer><a href="https://icp.gov.moe/?keyword=20240124" target="_blank">萌ICP备20240124号</a></footer>
 </body>
