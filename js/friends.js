@@ -14,6 +14,7 @@ export class FriendTemplate extends HTMLElement {
 		}
 
 		this.#anchor.href = href;
+		this.#anchor.target = "_blank";
 		this.#anchor.classList.add("friend-card", "shadow", "sk");
 
 		this.appendChild(this.#anchor);
