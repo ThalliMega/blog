@@ -12,10 +12,10 @@ const fallback = {
  * @param {(() => void) | null} reject
  */
 function trans(lang, fullfill, reject) {
-	import(`/i18n/${lang}.json`, { with: { type: "json" } }).then(
-		fullfill,
-		reject,
-	);
+	import(`/i18n/${lang}.json`, { with: { type: "json" } }).then((data) => {
+		fullfill(data);
+		document.documentElement.lang = lang;
+	}, reject);
 }
 
 /**
