@@ -1,0 +1,18 @@
+nav {
+	height: 10em;
+	margin: 5em 10em;
+}
+
+nav div {
+	height: 10em;
+	gap: 3em;
+}
+
+.nav-icon,
+.theme-icon {
+	height: 3em;
+}
+
+#avatar {
+	height: 8em;
+}

@@ -1,0 +1,4 @@
+.shadow:hover {
+	box-shadow: var(--shadow-color) 0 0.15em 0.4em;
+	transform: translateY(-0.2em);
+}

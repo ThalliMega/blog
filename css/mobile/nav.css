@@ -1,0 +1,23 @@
+nav {
+	flex-direction: column;
+	height: 10em;
+	margin: 3vh 0;
+}
+
+nav div {
+	height: 10em;
+	gap: 1em;
+}
+
+nav h1 {
+	font-size: 1.5em;
+}
+
+.nav-icon,
+.theme-icon {
+	height: 2.5em;
+}
+
+#avatar {
+	height: 4em;
+}

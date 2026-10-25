@@ -1,0 +1,44 @@
+nav {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+nav div {
+	display: flex;
+	align-items: center;
+}
+
+#avatar {
+	cursor: pointer;
+}
+
+.nav-icon path,
+.theme-icon path {
+	transition:
+		fill 0.2s ease-in-out,
+		stroke 0.2s ease-in-out;
+}
+
+.nav-icon,
+.theme-icon {
+	cursor: pointer;
+	--fill: transparent;
+}
+
+.nav-icon:hover,
+.theme-icon:hover {
+	--fill: light-dark(black, white);
+}
+.dark-icon {
+	stroke: light-dark(transparent, white);
+	fill: light-dark(transparent, var(--fill));
+}
+.nav-icon {
+	stroke: light-dark(black, white);
+	fill: var(--fill);
+}
+.light-icon {
+	stroke: light-dark(black, transparent);
+	fill: light-dark(var(--fill), transparent);
+}

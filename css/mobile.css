@@ -1,0 +1,11 @@
+@import "mobile/friend.css";
+@import "mobile/nav.css";
+@import "mobile/shadow.css";
+
+main {
+	gap: 1.5em;
+	margin: 0 0 2em;
+	h1 {
+		margin-top: 25vh;
+	}
+}

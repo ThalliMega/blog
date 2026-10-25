@@ -1,0 +1,20 @@
+.friend-card {
+	width: 30em;
+	height: 10em;
+	border-radius: 1.25em;
+	gap: 2em;
+	& > h3 {
+		padding: 1em;
+	}
+}
+
+.title-content {
+	padding-right: 2em;
+	h3 {
+		min-height: 2em;
+	}
+}
+
+.icon {
+	height: 10em;
+}
