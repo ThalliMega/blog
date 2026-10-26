@@ -1,6 +1,7 @@
 /** @type {Record<string, string>} */
 const fallback = {
 	zh: "zh-CN",
+	en: "en-US",
 };
 
 let currentLang = localStorage.getItem("lang") ?? navigator.language;
