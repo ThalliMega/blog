@@ -6,6 +6,7 @@
 @import "shadow.css";
 
 :root {
+	color-scheme: dark light;
 	background-color: light-dark(#eee, #111);
 	transition:
 		background 0.4s ease,
@@ -14,10 +15,6 @@
 
 @view-transition {
 	navigation: auto;
-}
-
-:root:active-view-transition {
-	transition-property: none;
 }
 
 body {

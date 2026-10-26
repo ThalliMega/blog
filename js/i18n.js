@@ -1,82 +1,66 @@
-"use strict";
-
 /** @type {Record<string, string>} */
 const fallback = {
 	zh: "zh-CN",
-	en: "en-US",
 };
 
+let currentLang = localStorage.getItem("lang") ?? navigator.language;
+/** @type {Record<string, string>} */
+let langObj = await getLang(currentLang);
+document.documentElement.lang = currentLang;
+
 /**
+ *
  * @param {string} lang
- * @param {(value: {default: any}) => any} fullfill
- * @param {(() => void) | null} reject
  */
-function trans(lang, fullfill, reject) {
-	import(`/i18n/${lang}.json`, { with: { type: "json" } }).then((data) => {
-		fullfill(data);
-		document.documentElement.lang = lang;
-	}, reject);
+async function getLang(lang) {
+	try {
+		const realLang = fallback[lang] ?? lang;
+		const realObj = await import(`/i18n/${realLang}.json`, {
+			with: { type: "json" },
+		});
+		currentLang = realLang;
+		return realObj.default;
+	} catch {
+		const hyphen = lang.indexOf("-");
+		if (hyphen === -1) {
+			return await getLang("zh-CN");
+		} else {
+			return await getLang(lang.substring(0, hyphen));
+		}
+	}
 }
 
 /**
  *
- * @param {(_: { default: any }) => void} handle
+ * @param {string|null} lang
  */
-function transBy(handle) {
-	const lang = localStorage.getItem("lang") ?? navigator.language;
-
-	trans(lang, handle, () =>
-		trans(fallback[new Intl.Locale(lang).language] ?? "zh-CN", handle, () =>
-			trans("zh-CN", handle, null),
-		),
-	);
-}
-
-export function transAll() {
-	/**
-	 *
-	 * @param {{ default: any }} param0
-	 */
-	function handle({ default: langObj }) {
-		for (const ele of document.querySelectorAll("*[data-i18n]")) {
-			ele.textContent = langObj[ele.getAttribute("data-i18n") ?? ""];
-		}
-		for (const ele of document.querySelectorAll("*[data-i18n-alt]")) {
-			ele.setAttribute("alt", langObj[ele.getAttribute("data-i18n-alt") ?? ""]);
-		}
-		for (const ele of document.querySelectorAll("*[data-i18n-label]")) {
-			ele.setAttribute(
-				"aria-label",
-				langObj[ele.getAttribute("data-i18n-label") ?? ""],
-			);
-		}
+export async function initLang(lang) {
+	if (lang) {
+		langObj = await getLang(lang);
+		document.documentElement.lang = currentLang;
+		localStorage.setItem("lang", currentLang);
 	}
 
-	transBy(handle);
+	for (const ele of document.querySelectorAll("*[data-i18n-con]")) {
+		ele.setAttribute(
+			"content",
+			langObj[ele.getAttribute("data-i18n-con") ?? ""],
+		);
+	}
+	for (const ele of document.querySelectorAll("*[data-i18n]")) {
+		ele.textContent = langObj[ele.getAttribute("data-i18n") ?? ""];
+	}
+	for (const ele of document.querySelectorAll("*[data-i18n-alt]")) {
+		ele.setAttribute("alt", langObj[ele.getAttribute("data-i18n-alt") ?? ""]);
+	}
+	for (const ele of document.querySelectorAll("*[data-i18n-label]")) {
+		ele.setAttribute(
+			"aria-label",
+			langObj[ele.getAttribute("data-i18n-label") ?? ""],
+		);
+	}
 }
 
-/**
- *
- * @param {HTMLElement} ele
- */
-export function transOne(ele) {
-	/**
-	 *
-	 * @param {{ default: any }} param0
-	 */
-	function handle({ default: langObj }) {
-		const text = ele.getAttribute("data-i18n");
-		if (text) {
-			ele.textContent = langObj[text];
-		}
-		const alt = ele.getAttribute("data-i18n-alt");
-		if (alt) {
-			ele.setAttribute("alt", langObj[alt]);
-		}
-		const label = ele.getAttribute("data-i18n-label");
-		if (label) {
-			ele.setAttribute("aria-label", langObj[label]);
-		}
-	}
-	transBy(handle);
-}
+initLang(null);
+
+export { currentLang, langObj };

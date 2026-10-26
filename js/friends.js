@@ -1,8 +1,6 @@
-"use strict";
+import { langObj } from "./i18n.js";
 
-import { transOne } from "./i18n.js";
-
-export class FriendTemplate extends HTMLElement {
+class FriendTemplate extends HTMLElement {
 	/** @type {HTMLAnchorElement} */
 	#anchor = document.createElement("a");
 	connectedCallback() {
@@ -51,10 +49,10 @@ export class FriendTemplate extends HTMLElement {
 		}
 
 		const img = document.createElement("img");
-		img.setAttribute("data-i18n-alt", "friend-icon");
+		img.setAttribute("data-i18n-alt", "friendIcon");
 		img.classList.add("icon");
 		img.src = new URL(icon, href).toString();
-		transOne(img);
+		img.alt = langObj["friendIcon"];
 		const titleEle = document.createElement("h3");
 		titleEle.textContent = title;
 		const p = document.createElement("p");
@@ -80,7 +78,7 @@ export class FriendTemplate extends HTMLElement {
 	}
 }
 
-export function initFriends() {
+function initFriends() {
 	const friendEle = document.getElementById("friends");
 	if (!friendEle) {
 		return;
@@ -121,3 +119,5 @@ export function initFriends() {
 		friendEle.appendChild(friendArt);
 	}
 }
+
+initFriends();
