@@ -12,6 +12,7 @@ nav div {
 
 #avatar {
 	cursor: pointer;
+	border-radius: 50%;
 }
 
 .nav-icon path,
@@ -28,7 +29,9 @@ nav div {
 }
 
 .nav-icon:hover,
-.theme-icon:hover {
+.nav-icon:focus,
+.theme-icon:hover,
+.theme-icon:focus {
 	--fill: light-dark(black, white);
 }
 .dark-icon {

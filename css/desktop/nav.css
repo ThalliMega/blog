@@ -11,8 +11,10 @@ nav div {
 .nav-icon,
 .theme-icon {
 	height: 3em;
+	aspect-ratio: 1;
 }
 
 #avatar {
 	height: 8em;
+	aspect-ratio: 1;
 }

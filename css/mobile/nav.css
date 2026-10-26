@@ -16,8 +16,10 @@ nav h1 {
 .nav-icon,
 .theme-icon {
 	height: 2.5em;
+	aspect-ratio: 1;
 }
 
 #avatar {
 	height: 4em;
+	aspect-ratio: 1;
 }
