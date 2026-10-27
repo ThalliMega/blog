@@ -32,6 +32,7 @@ initElements();
 window.onlanguagechange = async () => {
 	if (!localStorage.getItem("lang")) {
 		await initBySystem();
+		initElements();
 	}
 };
 
