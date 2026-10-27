@@ -8,8 +8,8 @@ const fallbackLang = "zh-CN";
 
 const storedLang = localStorage.getItem("lang");
 
-/** @type {string|null} */
-let currentLang = null;
+/** @type {string} */
+let currentLang = "";
 /** @type {Record<string, string>} */
 let langObj;
 

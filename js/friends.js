@@ -1,4 +1,4 @@
-import { langObj } from "./i18n.js";
+import { currentLang, langObj } from "./i18n.js";
 
 class FriendTemplate extends HTMLElement {
 	/** @type {HTMLAnchorElement} */
@@ -16,8 +16,12 @@ class FriendTemplate extends HTMLElement {
 		this.#anchor.classList.add("friend-card", "shadow", "sk");
 
 		this.appendChild(this.#anchor);
-		const lang = localStorage.getItem("lang") ?? navigator.language;
-		fetch(href, { headers: { "Accept-Language": lang } })
+		fetch(href, {
+			headers: {
+				"Accept-Language": currentLang,
+				Accept: "text/html",
+			},
+		})
 			.then((resp) => resp.text())
 			.then((resp) => this.parseMainpage(resp))
 			.catch(() => this.errMainpage())
