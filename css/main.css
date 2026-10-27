@@ -17,6 +17,13 @@
 	outline: none;
 }
 
+button {
+	border: none;
+	background: transparent;
+	padding: 0;
+	font: inherit;
+}
+
 @view-transition {
 	navigation: auto;
 }

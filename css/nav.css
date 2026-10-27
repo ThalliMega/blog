@@ -19,7 +19,8 @@ nav div {
 .theme-icon path {
 	transition:
 		fill 0.2s ease-in-out,
-		stroke 0.2s ease-in-out;
+		stroke 0.2s ease-in-out,
+		opacity 0.2s ease-in-out;
 }
 
 .nav-icon,
@@ -45,4 +46,14 @@ nav div {
 .light-icon {
 	stroke: light-dark(black, transparent);
 	fill: light-dark(var(--fill), transparent);
+}
+#system-theme {
+	stroke: light-dark(black, white);
+	fill: transparent;
+	stroke-width: 0.5;
+	scale: 2;
+	translate: -50% -50%;
+}
+svg {
+	overflow: visible;
 }

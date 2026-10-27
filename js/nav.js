@@ -1,4 +1,4 @@
-import { changeTheme } from "./color.js";
+import { changeTheme, currentTheme, systemTheme } from "./color.js";
 import { langObj } from "./i18n.js";
 
 class HeadNav extends HTMLElement {
@@ -36,21 +36,15 @@ class HeadNav extends HTMLElement {
 		// ================= 右侧区域 =================
 		const rightDiv = document.createElement("div");
 
+		const themeBtn = document.createElement("button");
+		themeBtn.type = "button";
+		themeBtn.classList.add("theme-icon");
+		themeBtn.setAttribute("data-i18n-label", "changeTheme");
+		themeBtn.ariaLabel = langObj["changeTheme"];
+		themeBtn.onclick = changeTheme;
 		// ---- 主题图标 (SVG) ----
 		const themeSvg = document.createElementNS(svgNS, "svg");
 		themeSvg.setAttribute("viewBox", "0 0 24 24");
-		themeSvg.classList.add("theme-icon");
-		themeSvg.setAttribute("data-i18n-label", "changeTheme");
-		themeSvg.ariaLabel = langObj["changeTheme"];
-		themeSvg.role = "button";
-		themeSvg.onclick = changeTheme;
-		themeSvg.onkeydown = (e) => {
-			if (["Enter", " "].includes(e.key)) {
-				e.preventDefault();
-				changeTheme();
-			}
-		};
-		themeSvg.tabIndex = 0;
 
 		const darkPath = document.createElementNS(svgNS, "path");
 		darkPath.classList.add("dark-icon");
@@ -72,6 +66,20 @@ class HeadNav extends HTMLElement {
 
 		themeSvg.appendChild(darkPath);
 		themeSvg.appendChild(lightPath);
+
+		const systemDefined = document.createElementNS(svgNS, "path");
+		systemDefined.id = "system-theme";
+		if (currentTheme !== systemTheme) {
+			systemDefined.style.opacity = "0";
+		}
+		systemDefined.setAttribute(
+			"d",
+			"M12 21C16.9706 21 21 16.9706 21 12C21 9.69494 20.1334 7.59227 18.7083 6L16 3M12 3C7.02944 3 3 7.02944 3 12C3 14.3051 3.86656 16.4077 5.29168 18L8 21M21 3H16M16 3V8M3 21H8M8 21V16",
+		);
+
+		themeSvg.appendChild(systemDefined);
+
+		themeBtn.appendChild(themeSvg);
 
 		// ---- 朋友链接与图标 ----
 		const friendsLink = document.createElement("a");
@@ -95,7 +103,7 @@ class HeadNav extends HTMLElement {
 		friendsSvg.appendChild(friendsPath);
 		friendsLink.appendChild(friendsSvg);
 
-		rightDiv.appendChild(themeSvg);
+		rightDiv.appendChild(themeBtn);
 		rightDiv.appendChild(friendsLink);
 
 		// ================= 组合并挂载 =================
