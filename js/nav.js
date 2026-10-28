@@ -52,6 +52,7 @@ class HeadNav extends HTMLElement {
 		themeBtn.setAttribute("data-i18n-label", "changeTheme");
 		themeBtn.ariaLabel = langObj["changeTheme"];
 		themeBtn.onclick = changeTheme;
+		themeBtn.onmouseleave = blurThis;
 		// ---- 主题图标 (SVG) ----
 		const themeSvg = document.createElementNS(svgNS, "svg");
 		themeSvg.setAttribute("viewBox", "0 0 24 24");
