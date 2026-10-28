@@ -8,7 +8,3 @@
 .shadow:active {
 	box-shadow: 0 0 0.35em var(--shadow-color);
 }
-
-.shadow:active {
-	scale: 0.95;
-}
