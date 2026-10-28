@@ -5,15 +5,14 @@
 	text-rendering="geometricPrecision"
 >
     <style>
+    	:root {
+     		color-scheme: dark light;
+     	}
         line {
-            stroke: black;
+            stroke: currentColor;
         }
         ellipse {
-            fill: black;
-        }
-        @media (prefers-color-scheme: dark) {
-            line { stroke: white; }
-            ellipse { fill: white; }
+            fill: currentColor;
         }
     </style>
     <line

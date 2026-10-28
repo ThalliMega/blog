@@ -8,6 +8,7 @@
 :root {
 	color-scheme: dark light;
 	background-color: light-dark(#eee, #111);
+	color: light-dark(#111, #eee);
 	transition:
 		background 0.4s ease,
 		color 0.4s ease;

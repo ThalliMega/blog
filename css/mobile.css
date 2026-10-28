@@ -5,6 +5,7 @@
 main {
 	gap: 1.5em;
 	margin: 0 0 2em;
+	padding: 0 0.5em;
 	h1 {
 		margin-top: 25vh;
 	}

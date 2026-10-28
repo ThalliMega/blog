@@ -4,11 +4,12 @@ const fallback = {
 	en: "en-US",
 };
 
+const supportedLangs = ["zh-CN", "en-US"];
+
 const fallbackLang = "zh-CN";
 
 const storedLang = localStorage.getItem("lang");
 
-/** @type {string} */
 let currentLang = "";
 /** @type {Record<string, string>} */
 let langObj;
@@ -53,13 +54,13 @@ function getLangFromSystem() {
 
 /** @param {string} lang @returns {Promise<[string, Record<string, string>] | null>} */
 async function getLang(lang) {
-	try {
-		const realLang = fallback[lang] ?? lang;
+	const realLang = fallback[lang] ?? lang;
+	if (supportedLangs.includes(realLang)) {
 		const realObj = await import(`/i18n/${realLang}.json`, {
 			with: { type: "json" },
 		});
 		return [realLang, realObj.default];
-	} catch {
+	} else {
 		const hyphen = lang.indexOf("-");
 		if (hyphen === -1) {
 			return null;
