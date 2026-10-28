@@ -1,6 +1,13 @@
 import { changeTheme, currentTheme, systemTheme } from "./color.js";
 import { langObj } from "./i18n.js";
 
+const avatar = fetch("/img/avatar.svg")
+	.then((r) => r.text())
+	.then((t) => {
+		const parser = new DOMParser();
+		return parser.parseFromString(t, "image/svg+xml");
+	});
+
 class HeadNav extends HTMLElement {
 	connectedCallback() {
 		const svgNS = "http://www.w3.org/2000/svg";
@@ -18,12 +25,12 @@ class HeadNav extends HTMLElement {
 		homeLink.id = "avatar";
 		homeLink.classList.add("shadow");
 
-		const avatarImg = document.createElement("img");
-		avatarImg.src = "/img/avatar.svg";
-		avatarImg.setAttribute("data-i18n-alt", "avatar");
-		avatarImg.alt = langObj.avatar;
-
-		homeLink.appendChild(avatarImg);
+		avatar.then((img) => {
+			const svg = img.querySelector("#ThalliMega");
+			if (svg) {
+				homeLink.appendChild(svg);
+			}
+		});
 
 		const navTitle = document.createElement("h1");
 		const dataTitle = this.getAttribute("data-title") ?? "defaultTitle";

@@ -1,17 +1,16 @@
 <svg
 	xmlns="http://www.w3.org/2000/svg"
 	viewBox="0 0 201 201"
-	shape-rendering="geometricPrecision"
-	text-rendering="geometricPrecision"
+	id="ThalliMega"
 >
     <style>
-    	:root {
+    	svg#ThalliMega {
      		color-scheme: dark light;
      	}
-        line {
+        line.ThalliMega {
             stroke: currentColor;
         }
-        ellipse {
+        ellipse.ThalliMega {
             fill: currentColor;
         }
     </style>
@@ -22,6 +21,7 @@
 		y2="50.25"
 		transform="translate(50.25 50.25)"
 		fill="none"
+		class="ThalliMega"
 	/>
     <line
 		x1="-50.25"
@@ -30,6 +30,7 @@
 		y2="50.25"
 		transform="translate(50.25 150.75)"
 		fill="none"
+		class="ThalliMega"
 	/>
     <line
 		x1="-50.25"
@@ -38,6 +39,7 @@
 		y2="-50.25"
 		transform="translate(150.75 150.75)"
 		fill="none"
+		class="ThalliMega"
 	/>
     <line
 		x1="50.25"
@@ -46,11 +48,13 @@
 		y2="-50.25"
 		transform="translate(150.75 50.25)"
 		fill="none"
+		class="ThalliMega"
 	/>
     <ellipse
 		rx="1"
 		ry="1"
 		transform="translate(100.5 100.5)"
 		stroke-width="0"
+		class="ThalliMega"
 	/>
 </svg>
