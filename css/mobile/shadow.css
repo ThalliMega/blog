@@ -1,5 +1,14 @@
-.shadow:hover,
-.shadow:focus {
-	box-shadow: var(--shadow-color) 0 0.1em 0.35em;
-	transform: translateY(-0.1em);
+@media (hover: hover) {
+	.shadow:hover {
+		box-shadow: 0 0 0.35em var(--shadow-color);
+	}
+}
+
+.shadow:focus,
+.shadow:active {
+	box-shadow: 0 0 0.35em var(--shadow-color);
+}
+
+.shadow:active {
+	scale: 0.95;
 }

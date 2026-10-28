@@ -29,12 +29,20 @@ nav div {
 	--fill: transparent;
 }
 
-.nav-icon:hover,
+.nav-icon:active,
 .nav-icon:focus,
-.theme-icon:hover,
+.theme-icon:active,
 .theme-icon:focus {
 	--fill: light-dark(black, white);
 }
+
+@media (hover: hover) {
+	.nav-icon:hover,
+	.theme-icon:hover {
+		--fill: light-dark(black, white);
+	}
+}
+
 .dark-icon {
 	stroke: light-dark(transparent, white);
 	fill: light-dark(transparent, var(--fill));

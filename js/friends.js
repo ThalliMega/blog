@@ -1,4 +1,5 @@
 import { currentLang, langObj } from "./i18n.js";
+import { blurThis } from "./util.js";
 
 class FriendTemplate extends HTMLElement {
 	/** @type {HTMLAnchorElement} */
@@ -14,6 +15,8 @@ class FriendTemplate extends HTMLElement {
 		this.#anchor.href = href;
 		this.#anchor.target = "_blank";
 		this.#anchor.classList.add("friend-card", "shadow", "sk");
+		this.#anchor.onclick = blurThis;
+		this.#anchor.ondragend = blurThis;
 
 		this.appendChild(this.#anchor);
 		fetch(href, {

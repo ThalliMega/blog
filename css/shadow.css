@@ -1,6 +1,6 @@
 .shadow {
 	--shadow-color: light-dark(#0000003d, #ffffff3d);
 	transition:
-		box-shadow 0.3s ease-out,
-		transform 0.3s ease-out;
+		box-shadow 0.4s ease-out,
+		scale 0.1s ease-out;
 }

@@ -1,5 +1,6 @@
 import { changeTheme, currentTheme, systemTheme } from "./color.js";
 import { langObj } from "./i18n.js";
+import { blurThis } from "./util.js";
 
 const avatar = fetch("/img/avatar.svg")
 	.then((r) => r.text())
@@ -24,6 +25,8 @@ class HeadNav extends HTMLElement {
 		homeLink.ariaLabel = langObj.toHome;
 		homeLink.id = "avatar";
 		homeLink.classList.add("shadow");
+		homeLink.onclick = blurThis;
+		homeLink.ondragend = blurThis;
 
 		avatar.then((img) => {
 			const svg = img.querySelector("#ThalliMega");
@@ -94,6 +97,8 @@ class HeadNav extends HTMLElement {
 		friendsLink.setAttribute("data-i18n-label", "toFriends");
 		friendsLink.ariaLabel = langObj.toFriends;
 		friendsLink.classList.add("nav-icon");
+		friendsLink.onclick = blurThis;
+		friendsLink.ondragend = blurThis;
 
 		const friendsSvg = document.createElementNS(svgNS, "svg");
 		friendsSvg.setAttribute("viewBox", "0 0 24 24");
