@@ -5,6 +5,8 @@
 		scale 0.1s ease-out;
 }
 
-.shadow:active {
-	scale: 0.96;
+@media (prefers-reduced-motion: no-preference) {
+	.shadow:active {
+		scale: 0.96;
+	}
 }

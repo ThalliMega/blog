@@ -12,6 +12,8 @@
 	transition:
 		background 0.4s ease,
 		color 0.4s ease;
+	scrollbar-color: light-dark(#333, #ccc) light-dark(#ccc, #333);
+	scrollbar-gutter: stable both-edges;
 }
 
 a {
