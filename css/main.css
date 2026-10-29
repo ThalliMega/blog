@@ -9,10 +9,11 @@
 	color-scheme: dark light;
 	background-color: light-dark(#eee, #111);
 	color: light-dark(#111, #eee);
-	transition:
-		background 0.4s ease,
-		color 0.4s ease;
-	scrollbar-color: light-dark(#333, #ccc) light-dark(#ccc, #333);
+	transition-property: background, color, display, opacity, backdrop-filter;
+	transition-behavior: allow-discrete;
+	transition-duration: 0.4s;
+	transition-timing-function: ease;
+	scrollbar-color: light-dark(#333, #ccc) light-dark(#eee, #111);
 	scrollbar-gutter: stable both-edges;
 }
 

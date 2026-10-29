@@ -1,12 +1,16 @@
 .shadow {
 	--shadow-color: light-dark(#0000003d, #ffffff3d);
-	transition:
-		box-shadow 0.4s ease-out,
-		scale 0.1s ease-out;
+	transition: box-shadow 0.4s ease-out;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-	.shadow:active {
-		scale: 0.96;
+	.shadow {
+		transition:
+			box-shadow 0.4s ease-out,
+			scale 0.1s ease-out;
 	}
+}
+
+.shadow:active {
+	scale: 0.96;
 }

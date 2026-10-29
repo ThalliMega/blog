@@ -118,6 +118,7 @@ function initElements() {
  * @param {string|null} lang
  */
 export async function changeLang(lang) {
+	const systendLang = document.getElementById("system-lang");
 	if (lang) {
 		const langObjs = await getLang(lang);
 		if (langObjs) {
@@ -125,6 +126,9 @@ export async function changeLang(lang) {
 			langObj = langObjs[1];
 			localStorage.setItem("lang", currentLang);
 			initElements();
+			if (systendLang) {
+				systendLang.style.opacity = "0";
+			}
 		} else {
 			console.warn(`lang ${lang} not found`);
 		}
@@ -132,7 +136,10 @@ export async function changeLang(lang) {
 		localStorage.removeItem("lang");
 		await initBySystem();
 		initElements();
+		if (systendLang) {
+			systendLang.style.opacity = "1";
+		}
 	}
 }
 
-export { currentLang, langObj };
+export { currentLang, langObj, supportedLangs };

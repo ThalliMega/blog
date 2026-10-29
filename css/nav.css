@@ -1,8 +1,13 @@
 nav {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
 	justify-content: space-between;
 	view-transition-name: nav;
+}
+
+nav h1 {
+	word-break: break-all;
 }
 
 nav div {
@@ -16,7 +21,7 @@ nav div {
 }
 
 .nav-icon path,
-.theme-icon path {
+#lang-button path {
 	transition:
 		fill 0.2s ease-in-out,
 		stroke 0.2s ease-in-out,
@@ -24,50 +29,113 @@ nav div {
 }
 
 .nav-icon,
-.theme-icon {
+#lang-button {
 	cursor: pointer;
 	--fill: transparent;
-	transition: scale 0.2s ease-in-out;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.nav-icon,
+	#lang-button {
+		transition:
+			scale 0.2s ease-in-out,
+			rotate 0.5s ease-in-out;
+	}
 }
 
 .nav-icon:active,
-.theme-icon:active {
+#lang-button:active {
 	scale: 0.9;
 }
 
 .nav-icon:active,
-.nav-icon:focus,
-.theme-icon:active,
-.theme-icon:focus {
+.nav-icon:focus {
 	--fill: light-dark(black, white);
 }
 
+/*#lang-button:active,
+#lang-button:focus {
+	rotate: 0.5turn;
+}*/
+
 @media (hover: hover) {
-	.nav-icon:hover,
-	.theme-icon:hover {
+	.nav-icon:hover {
 		--fill: light-dark(black, white);
 	}
+
+	/*#lang-button:hover {
+		rotate: 0.5turn;
+	}*/
 }
 
 .dark-icon {
 	stroke: light-dark(transparent, white);
 	fill: light-dark(transparent, var(--fill));
 }
-.nav-icon {
+
+.nav-icon,
+#lang-button {
 	stroke: light-dark(black, white);
 	fill: var(--fill);
 }
+
 .light-icon {
 	stroke: light-dark(black, transparent);
 	fill: light-dark(var(--fill), transparent);
 }
-#system-theme {
+
+#system-theme,
+#system-lang {
 	stroke: light-dark(black, white);
 	fill: transparent;
 	stroke-width: 0.5;
 	scale: 2;
 	translate: -50% -50%;
 }
+
 svg {
 	overflow: visible;
+}
+
+#lang-diag {
+	background: light-dark(#aaa, #555);
+	border: none;
+	padding: 0;
+	opacity: 0;
+	&:open {
+		display: flex;
+		flex-direction: column;
+		opacity: 1;
+	}
+	ul {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+		overflow: auto;
+		flex-grow: 1;
+		li {
+			display: flex;
+			align-items: center;
+			&:hover {
+				background: light-dark(#888, #777);
+			}
+		}
+	}
+	h2 {
+		text-align: center;
+	}
+	button {
+		align-self: center;
+		background-color: light-dark(#ccc, #333);
+	}
+}
+
+/* 使用 ::backdrop 伪元素直接选中原生 <dialog> 的遮罩层 */
+dialog::backdrop {
+	@starting-style {
+		backdrop-filter: none;
+	}
+	/* 使用高斯模糊，像素值越大越模糊 */
+	backdrop-filter: blur(0.25em);
+	background: transparent;
 }

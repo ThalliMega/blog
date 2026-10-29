@@ -8,5 +8,8 @@
 	"defaultTitle": "Thallium Megalovania的博客",
 	"pageNotFound": "页面未找到",
 	"friendsPageDes": "Thallium Megalovania的朋友们",
-	"friendsTitle": "Thallium Megalovania的朋友们"
+	"friendsTitle": "Thallium Megalovania的朋友们",
+	"changeLang": "切换语言",
+	"chooseLanguage": "选择你的语言",
+	"resetLanguage": "重置为系统默认"
 }

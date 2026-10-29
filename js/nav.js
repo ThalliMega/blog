@@ -1,5 +1,5 @@
 import { changeTheme, currentTheme, systemTheme } from "./color.js";
-import { langObj } from "./i18n.js";
+import { changeLang, currentLang, langObj, supportedLangs } from "./i18n.js";
 import { blurThis } from "./util.js";
 
 const avatar = fetch("/img/avatar.svg")
@@ -13,8 +13,49 @@ class HeadNav extends HTMLElement {
 	connectedCallback() {
 		const svgNS = "http://www.w3.org/2000/svg";
 
+		const systemd = document.createElementNS(svgNS, "path");
+		systemd.setAttribute(
+			"d",
+			"M12 21C16.9706 21 21 16.9706 21 12C21 9.69494 20.1334 7.59227 18.7083 6L16 3M12 3C7.02944 3 3 7.02944 3 12C3 14.3051 3.86656 16.4077 5.29168 18L8 21M21 3H16M16 3V8M3 21H8M8 21V16",
+		);
+
 		// 1. 创建最外层的 <nav> 元素
 		const nav = document.createElement("nav");
+
+		const langDiag = document.createElement("dialog");
+		langDiag.id = "lang-diag";
+		const langDiagTitle = document.createElement("h2");
+		langDiagTitle.setAttribute("data-i18n", "chooseLanguage");
+		langDiagTitle.textContent = langObj["chooseLanguage"];
+		langDiag.appendChild(langDiagTitle);
+		const ul = document.createElement("ul");
+		for (const lang of supportedLangs) {
+			const li = document.createElement("li");
+			const intlang = new Intl.DisplayNames(lang, {
+				type: "language",
+				languageDisplay: "standard",
+			});
+			li.textContent = /** @type {string} */ (intlang.of(lang));
+			li.onclick = () => {
+				changeLang(lang);
+				langDiag.close();
+			};
+			ul.appendChild(li);
+		}
+		langDiag.appendChild(ul);
+
+		const langReset = document.createElement("button");
+		langReset.type = "button";
+		langReset.setAttribute("data-i18n", "resetLanguage");
+		langReset.textContent = langObj["resetLanguage"];
+		langReset.classList.add("shadow");
+		langReset.onclick = () => {
+			changeLang(null);
+			langDiag.close();
+		};
+		langDiag.appendChild(langReset);
+
+		nav.appendChild(langDiag);
 
 		// ================= 左侧区域 =================
 		const leftDiv = document.createElement("div");
@@ -46,9 +87,40 @@ class HeadNav extends HTMLElement {
 		// ================= 右侧区域 =================
 		const rightDiv = document.createElement("div");
 
+		const langBtn = document.createElement("button");
+		langBtn.type = "button";
+		langBtn.id = "lang-button";
+		langBtn.setAttribute("data-i18n-label", "changeLang");
+		langBtn.ariaLabel = langObj["changeLang"];
+		langBtn.draggable = true;
+		langBtn.ondragend = blurThis;
+		langBtn.onclick = (e) => {
+			langDiag.showModal();
+			blurThis(e);
+			langReset.blur();
+		};
+
+		const langSvg = document.createElementNS(svgNS, "svg");
+		langSvg.setAttribute("viewBox", "0 0 24 24");
+		const langPath = document.createElementNS(svgNS, "path");
+		langPath.setAttribute(
+			"d",
+			"M31 16.001C31 24.285 24.284 31.001 16 31.001C7.716 31.001 1 24.285 1 16.001M31 16.001C31 7.717 24.284 1.001 16 1.001C7.716 1.001 1 7.717 1 16.001M31 16.001H1M11.834 1.5879C9.397 5.8329 8.004 10.7549 8.004 16.0009C8.004 21.2469 9.396 26.1689 11.834 30.4139M20.1699 30.4121C22.6079 26.1681 23.9999 21.2471 23.9999 16.0011C23.9999 10.7571 22.6069 5.8381 20.1719 1.5901M27.6543 25.4395C24.0883 23.8745 20.1473 23.0045 16.0043 23.0045C11.8573 23.0045 7.9143 23.8765 4.3453 25.4435M4.3486 6.5635C7.9146 8.1315 11.8576 9.0015 16.0036 9.0015C20.1486 9.0015 24.0896 8.1305 27.6586 6.5635M15.999 1V31",
+		);
+		langPath.setAttribute("transform", "scale(0.75)");
+		langSvg.appendChild(langPath);
+		const systemdLang = document.importNode(systemd);
+		systemdLang.id = "system-lang";
+		if (localStorage.getItem("lang")) {
+			systemdLang.style.opacity = "0";
+		}
+		langSvg.appendChild(systemdLang);
+		langBtn.appendChild(langSvg);
+		rightDiv.appendChild(langBtn);
+
 		const themeBtn = document.createElement("button");
 		themeBtn.type = "button";
-		themeBtn.classList.add("theme-icon");
+		themeBtn.classList.add("nav-icon");
 		themeBtn.setAttribute("data-i18n-label", "changeTheme");
 		themeBtn.ariaLabel = langObj["changeTheme"];
 		themeBtn.onclick = changeTheme;
@@ -79,15 +151,11 @@ class HeadNav extends HTMLElement {
 		themeSvg.appendChild(darkPath);
 		themeSvg.appendChild(lightPath);
 
-		const systemDefined = document.createElementNS(svgNS, "path");
+		const systemDefined = document.importNode(systemd);
 		systemDefined.id = "system-theme";
 		if (currentTheme !== systemTheme) {
 			systemDefined.style.opacity = "0";
 		}
-		systemDefined.setAttribute(
-			"d",
-			"M12 21C16.9706 21 21 16.9706 21 12C21 9.69494 20.1334 7.59227 18.7083 6L16 3M12 3C7.02944 3 3 7.02944 3 12C3 14.3051 3.86656 16.4077 5.29168 18L8 21M21 3H16M16 3V8M3 21H8M8 21V16",
-		);
 
 		themeSvg.appendChild(systemDefined);
 

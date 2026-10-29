@@ -1,15 +1,15 @@
 nav {
-	height: 10em;
+	min-height: 10em;
 	margin: 5em 10em;
 }
 
 nav div {
-	height: 10em;
+	min-height: 10em;
 	gap: 3em;
 }
 
 .nav-icon,
-.theme-icon {
+#lang-button {
 	height: 3em;
 	aspect-ratio: 1;
 }
@@ -17,4 +17,24 @@ nav div {
 #avatar {
 	height: 8em;
 	aspect-ratio: 1;
+}
+
+#lang-diag {
+	border-radius: 1.25em;
+}
+
+#lang-diag {
+	height: 60vh;
+	width: 50vw;
+	ul li {
+		min-height: 3em;
+		padding-inline: 2em;
+	}
+
+	button {
+		max-width: 80%;
+		padding: 0.5em 1em;
+		margin: 1em;
+		border-radius: 1em;
+	}
 }

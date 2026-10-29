@@ -8,5 +8,8 @@
 	"defaultTitle": "Thallium Megalovania's blog",
 	"pageNotFound": "Page Not Found",
 	"friendsPageDes": "Thallium Megalovania's friends",
-	"friendsTitle": "Thallium Megalovania's Friends"
+	"friendsTitle": "Thallium Megalovania's Friends",
+	"changeLang": "change the language",
+	"chooseLanguage": "Choose your language",
+	"resetLanguage": "Reset to system default"
 }

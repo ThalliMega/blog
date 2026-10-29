@@ -1,12 +1,12 @@
 nav {
 	flex-direction: column;
-	height: 10em;
+	min-height: 10em;
 	margin: 3vh 0.5em;
 }
 
 nav div {
-	height: 10em;
-	gap: 1.5em;
+	min-height: 10em;
+	gap: 2em;
 }
 
 nav h1 {
@@ -14,7 +14,7 @@ nav h1 {
 }
 
 .nav-icon,
-.theme-icon {
+#lang-button {
 	height: 2.5em;
 	aspect-ratio: 1;
 }
@@ -22,4 +22,24 @@ nav h1 {
 #avatar {
 	height: 4em;
 	aspect-ratio: 1;
+}
+
+#lang-diag {
+	border-radius: 1em;
+}
+
+#lang-diag {
+	height: 70vh;
+	width: 70vw;
+	ul li {
+		min-height: 3em;
+		padding-inline: 2em;
+	}
+
+	button {
+		max-width: 80%;
+		padding: 0.5em 1em;
+		margin: 1em;
+		border-radius: 1em;
+	}
 }
