@@ -31,12 +31,13 @@ nav h1 {
 #lang-diag {
 	height: 70vh;
 	width: 70vw;
-	ul li {
-		min-height: 3em;
+
+	li button {
 		padding-inline: 2em;
+		min-height: 3em;
 	}
 
-	button {
+	& > button {
 		max-width: 80%;
 		padding: 0.5em 1em;
 		margin: 1em;

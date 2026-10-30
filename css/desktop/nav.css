@@ -26,12 +26,14 @@ nav div {
 #lang-diag {
 	height: 60vh;
 	width: 50vw;
-	ul li {
-		min-height: 3em;
+
+	li button {
 		padding-inline: 2em;
+
+		min-height: 3em;
 	}
 
-	button {
+	& > button {
 		max-width: 80%;
 		padding: 0.5em 1em;
 		margin: 1em;

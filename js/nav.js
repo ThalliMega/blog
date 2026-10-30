@@ -31,15 +31,18 @@ class HeadNav extends HTMLElement {
 		const ul = document.createElement("ul");
 		for (const lang of supportedLangs) {
 			const li = document.createElement("li");
+			const lbt = document.createElement("button");
+			lbt.type = "button";
 			const intlang = new Intl.DisplayNames(lang, {
 				type: "language",
 				languageDisplay: "standard",
 			});
-			li.textContent = /** @type {string} */ (intlang.of(lang));
-			li.onclick = () => {
+			lbt.textContent = /** @type {string} */ (intlang.of(lang));
+			lbt.onclick = () => {
 				changeLang(lang);
 				langDiag.close();
 			};
+			li.appendChild(lbt);
 			ul.appendChild(li);
 		}
 		langDiag.appendChild(ul);

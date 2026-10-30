@@ -9,7 +9,7 @@
 	color-scheme: dark light;
 	background-color: light-dark(#eee, #111);
 	color: light-dark(#111, #eee);
-	transition-property: background, color, display, opacity, backdrop-filter;
+	transition-property: background, color, display, opacity;
 	transition-behavior: allow-discrete;
 	transition-duration: 0.4s;
 	transition-timing-function: ease;

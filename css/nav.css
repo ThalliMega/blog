@@ -99,15 +99,32 @@ svg {
 	overflow: visible;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+	#lang-diag {
+		transition-behavior: allow-discrete;
+		opacity: 0;
+		transform: scaleY(0);
+		&:open {
+			transform: scaleY(1);
+			opacity: 1;
+			@starting-style {
+				opacity: 0;
+				transform: scaleY(0);
+			}
+		}
+	}
+}
+
 #lang-diag {
+	transition-property: all;
+	transition-duration: 0.4s;
+	transition-timing-function: ease;
 	background: light-dark(#aaa, #555);
 	border: none;
 	padding: 0;
-	opacity: 0;
 	&:open {
 		display: flex;
 		flex-direction: column;
-		opacity: 1;
 	}
 	ul {
 		list-style-type: none;
@@ -116,30 +133,45 @@ svg {
 		overflow: auto;
 		flex-grow: 1;
 		li {
-			display: flex;
-			align-items: center;
-			&:hover {
-				background: light-dark(#888, #777);
+			button {
+				transition-property: background, color;
+				transition-duration: 0.4s;
+				transition-timing-function: ease;
+				box-shadow: none;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				display: flex;
+				align-items: center;
+				&:hover,
+				&:focus {
+					background: light-dark(#888, #777);
+				}
 			}
 		}
 	}
 	h2 {
 		text-align: center;
 	}
-	button {
+	& > button {
 		align-self: center;
 		background-color: light-dark(#ccc, #333);
 	}
 }
 
 /* 使用 ::backdrop 伪元素直接选中原生 <dialog> 的遮罩层 */
-dialog::backdrop {
-	@starting-style {
-		backdrop-filter: none;
+dialog {
+	&::backdrop {
+		transition-property: backdrop-filter;
+		transition-duration: 0.4s;
+		transition-timing-function: ease;
+		@starting-style {
+			backdrop-filter: none;
+		}
+		/* 使用高斯模糊，像素值越大越模糊 */
+		backdrop-filter: blur(0.25em);
+		background: transparent;
 	}
-	/* 使用高斯模糊，像素值越大越模糊 */
-	backdrop-filter: blur(0.25em);
-	background: transparent;
 }
 
 #lang-selected {
