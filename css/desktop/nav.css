@@ -1,21 +1,21 @@
 nav {
 	min-height: 10em;
-	margin: 5em 10em;
+	margin: min(5em, 10vh) min(10vw, 10em);
 }
 
 nav div {
-	min-height: 10em;
+	min-height: min(30vh, 10em);
 	gap: 3em;
 }
 
 .nav-icon,
 #lang-button {
-	height: 3em;
+	height: min(30vh, 3em);
 	aspect-ratio: 1;
 }
 
 #avatar {
-	height: 8em;
+	height: min(30vmin, 8em);
 	aspect-ratio: 1;
 }
 
@@ -24,8 +24,16 @@ nav div {
 }
 
 #lang-diag {
-	height: 60vh;
-	width: 50vw;
+	min-height: 60vh;
+	min-width: min(40em, 40vw);
+
+	h2 {
+		padding-inline: 0.5em;
+	}
+
+	ul {
+		min-height: 3em;
+	}
 
 	li button {
 		padding-inline: 2em;
@@ -34,7 +42,7 @@ nav div {
 	}
 
 	& > button {
-		max-width: 80%;
+		min-width: 7em;
 		padding: 0.5em 1em;
 		margin: 1em;
 		border-radius: 1em;

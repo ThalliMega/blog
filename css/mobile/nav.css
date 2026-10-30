@@ -15,12 +15,12 @@ nav h1 {
 
 .nav-icon,
 #lang-button {
-	height: 2.5em;
+	height: min(15vw, 2.5em);
 	aspect-ratio: 1;
 }
 
 #avatar {
-	height: 4em;
+	height: min(30vmin, 4em);
 	aspect-ratio: 1;
 }
 
@@ -29,16 +29,23 @@ nav h1 {
 }
 
 #lang-diag {
-	height: 70vh;
-	width: 70vw;
+	min-height: 70vh;
+	min-width: 70vw;
+	h2 {
+		padding-inline: 0.5em;
+	}
+
+	ul {
+		min-height: 5em;
+	}
 
 	li button {
 		padding-inline: 2em;
-		min-height: 3em;
+		min-height: 5em;
 	}
 
 	& > button {
-		max-width: 80%;
+		min-width: 7em;
 		padding: 0.5em 1em;
 		margin: 1em;
 		border-radius: 1em;

@@ -29,7 +29,9 @@ class HeadNav extends HTMLElement {
 		langDiagTitle.textContent = langObj["chooseLanguage"];
 		langDiag.appendChild(langDiagTitle);
 		const ul = document.createElement("ul");
-		for (const lang of supportedLangs) {
+		for (const lang of supportedLangs.sort(
+			new Intl.Collator(currentLang).compare,
+		)) {
 			const li = document.createElement("li");
 			const lbt = document.createElement("button");
 			lbt.type = "button";
@@ -38,6 +40,7 @@ class HeadNav extends HTMLElement {
 				languageDisplay: "standard",
 			});
 			lbt.textContent = /** @type {string} */ (intlang.of(lang));
+			lbt.id = lang;
 			lbt.onclick = () => {
 				changeLang(lang);
 				langDiag.close();
@@ -100,8 +103,7 @@ class HeadNav extends HTMLElement {
 		langBtn.ondragend = blurThis;
 		langBtn.onclick = (e) => {
 			langDiag.showModal();
-			blurThis(e);
-			langReset.blur();
+			document.getElementById(currentLang)?.focus();
 		};
 
 		const langSvg = document.createElementNS(svgNS, "svg");

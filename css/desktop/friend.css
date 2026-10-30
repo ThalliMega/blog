@@ -1,5 +1,5 @@
 .friend-card {
-	width: 30em;
+	width: min(30em, 90vw);
 	height: 10em;
 	border-radius: 1.25em;
 	gap: 2em;
