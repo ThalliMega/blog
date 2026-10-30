@@ -21,7 +21,8 @@ nav div {
 }
 
 .nav-icon path,
-#lang-button path {
+#lang-button path,
+#lang-button circle {
 	transition:
 		fill 0.2s ease-in-out,
 		stroke 0.2s ease-in-out,
@@ -32,6 +33,7 @@ nav div {
 #lang-button {
 	cursor: pointer;
 	--fill: transparent;
+	--lang-selected: 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -53,19 +55,19 @@ nav div {
 	--fill: light-dark(black, white);
 }
 
-/*#lang-button:active,
+#lang-button:active,
 #lang-button:focus {
-	rotate: 0.5turn;
-}*/
+	--lang-selected: 1;
+}
 
 @media (hover: hover) {
 	.nav-icon:hover {
 		--fill: light-dark(black, white);
 	}
 
-	/*#lang-button:hover {
-		rotate: 0.5turn;
-	}*/
+	#lang-button:hover {
+		--lang-selected: 1;
+	}
 }
 
 .dark-icon {
@@ -138,4 +140,8 @@ dialog::backdrop {
 	/* 使用高斯模糊，像素值越大越模糊 */
 	backdrop-filter: blur(0.25em);
 	background: transparent;
+}
+
+#lang-selected {
+	opacity: var(--lang-selected);
 }

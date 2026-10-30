@@ -43,6 +43,7 @@ class HeadNav extends HTMLElement {
 			ul.appendChild(li);
 		}
 		langDiag.appendChild(ul);
+		langDiag.onclose = () => document.getElementById("lang-button")?.blur();
 
 		const langReset = document.createElement("button");
 		langReset.type = "button";
@@ -114,6 +115,12 @@ class HeadNav extends HTMLElement {
 		if (localStorage.getItem("lang")) {
 			systemdLang.style.opacity = "0";
 		}
+		const langSelected = document.createElementNS(svgNS, "circle");
+		langSelected.setAttribute("cx", "12");
+		langSelected.setAttribute("cy", "12");
+		langSelected.setAttribute("r", "14");
+		langSelected.id = "lang-selected";
+		langSvg.appendChild(langSelected);
 		langSvg.appendChild(systemdLang);
 		langBtn.appendChild(langSvg);
 		rightDiv.appendChild(langBtn);
