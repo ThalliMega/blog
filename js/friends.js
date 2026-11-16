@@ -1,6 +1,3 @@
-import { currentLang, langObj } from "./i18n.js";
-import { blurThis } from "./util.js";
-
 class FriendTemplate extends HTMLElement {
 	/** @type {HTMLAnchorElement} */
 	#anchor = document.createElement("a");
@@ -15,20 +12,21 @@ class FriendTemplate extends HTMLElement {
 		this.#anchor.href = href;
 		this.#anchor.target = "_blank";
 		this.#anchor.classList.add("friend-card", "shadow", "sk");
-		this.#anchor.onclick = blurThis;
-		this.#anchor.ondragend = blurThis;
+		this.#anchor.ariaLabel = "正在刷新…";
 
 		this.appendChild(this.#anchor);
 		fetch(href, {
 			headers: {
-				"Accept-Language": currentLang,
 				Accept: "text/html",
 			},
 		})
 			.then((resp) => resp.text())
 			.then((resp) => this.parseMainpage(resp))
 			.catch(() => this.errMainpage())
-			.finally(() => this.#anchor.classList.remove("sk"));
+			.finally(() => {
+				this.#anchor.classList.remove("sk");
+				this.#anchor.removeAttribute("aria-label");
+			});
 	}
 	/** @param {string} resp  */
 	parseMainpage(resp) {
@@ -56,10 +54,9 @@ class FriendTemplate extends HTMLElement {
 		}
 
 		const img = document.createElement("img");
-		img.setAttribute("data-i18n-alt", "friendIcon");
 		img.classList.add("icon");
 		img.src = new URL(icon, href).toString();
-		img.alt = langObj["friendIcon"];
+		img.ariaHidden = "true";
 		const titleEle = document.createElement("h3");
 		titleEle.textContent = title;
 		const p = document.createElement("p");
